@@ -1,18 +1,27 @@
 defmodule ListFilter do
-  @moduledoc """
-  Documentation for `ListFilter`.
-  """
+
+  require Integer
 
   @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> ListFilter.hello()
-      :world
-
+    Retorna a quantidade de numeros impares.
   """
-  def hello do
-    :world
+  @spec call(list()) :: number()
+  def call(list) do
+    list
+    |> filter_by_numbers()
+  end
+
+  defp filter_by_numbers(list) do
+    list
+    |> Enum.map(&Integer.parse/1)
+    |> Enum.map(fn elem ->
+      case elem do
+       {number, _} -> number
+       _ -> :error
+      end
+    end)
+    |> Enum.filter(&is_number/1)
+    |> Enum.filter(&Integer.is_odd/1)
+    |> Enum.count()
   end
 end
